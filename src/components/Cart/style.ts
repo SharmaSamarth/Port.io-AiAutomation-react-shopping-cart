@@ -121,6 +121,28 @@ export const HeaderTitle = styled.span`
   vertical-align: middle;
 `;
 
+export const ClearCartButton = styled.button`
+  display: block;
+  margin: 0 5% 10px auto;
+  padding: 8px 14px;
+  border: 1px solid ${({ theme }) => theme.colors.onPrimaryMuted};
+  border-radius: 3px;
+  color: ${({ theme }) => theme.colors.onPrimary};
+  font-size: 0.8em;
+  text-transform: uppercase;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.colors.secondary};
+  }
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.secondary};
+  }
+`;
+
 export const Sub = styled.p`
   width: 20%;
   color: ${({ theme }) => theme.colors.onPrimaryMuted};
