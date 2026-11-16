@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import formatPrice from 'utils/formatPrice';
 import CartProducts from './CartProducts';
 
@@ -6,7 +8,8 @@ import { useCart } from 'contexts/cart-context';
 import * as S from './style';
 
 const Cart = () => {
-  const { products, total, isOpen, openCart, closeCart } = useCart();
+  const { products, total, isOpen, openCart, closeCart, clearCart } = useCart();
+  const cartButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleCheckout = () => {
     if (total.productQuantity) {
@@ -21,12 +24,18 @@ const Cart = () => {
     }
   };
 
+  const handleClearCart = () => {
+    clearCart();
+    /* The clear button unmounts once the cart is empty: keep keyboard focus */
+    cartButtonRef.current?.focus();
+  };
+
   const handleToggleCart = (isOpen: boolean) => () =>
     isOpen ? closeCart() : openCart();
 
   return (
     <S.Container isOpen={isOpen}>
-      <S.CartButton onClick={handleToggleCart(isOpen)}>
+      <S.CartButton ref={cartButtonRef} onClick={handleToggleCart(isOpen)}>
         {isOpen ? (
           <span>X</span>
         ) : (
@@ -46,6 +55,12 @@ const Cart = () => {
             </S.CartIcon>
             <S.HeaderTitle>Cart</S.HeaderTitle>
           </S.CartContentHeader>
+
+          {products.length > 0 && (
+            <S.ClearCartButton type="button" onClick={handleClearCart}>
+              Clear cart
+            </S.ClearCartButton>
+          )}
 
           <CartProducts products={products} />
 

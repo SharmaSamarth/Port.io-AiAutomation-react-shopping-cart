@@ -66,10 +66,16 @@ const useCartProducts = () => {
     updateCartTotal(updatedProducts);
   };
 
+  const clearCart = () => {
+    setProducts([]);
+    updateCartTotal([]);
+  };
+
   return {
     products,
     addProduct,
     removeProduct,
+    clearCart,
     increaseProductQuantity,
     decreaseProductQuantity,
   };
